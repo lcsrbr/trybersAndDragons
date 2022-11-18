@@ -1,22 +1,21 @@
 // import Energy from "../Energy";
-import Archetype from "./Archetype";
-import { EnergyType } from "../Energy";
+import Archetype from './Archetype';
+import { EnergyType } from '../Energy';
 
-export default class Ranger extends Archetype{
+export default class Ranger extends Archetype {
+  private _energyType: EnergyType;
+  private static _instanceCalledTimes = 0;
+  constructor(name: string) {
+    super(name);
+    Ranger._instanceCalledTimes += 1;
+    this._energyType = 'stamina';
+  }
 
-    private _damage: string;
-    private static _instanceCalledTimes: number = 0;
-    constructor(name: string) {
-        super(name);
-        this._damage = '';
-        Ranger._instanceCalledTimes += 1;
-    }
+  get energyType(): EnergyType {
+    return this._energyType;
+  }
 
-    get energyType(): EnergyType {
-        return 'stamina';
-    }
-
-    static createdArchetypeInstances(): number {
-        return Ranger._instanceCalledTimes;
-    }
+  static createdArchetypeInstances(): number {
+    return Ranger._instanceCalledTimes;
+  }
 }
