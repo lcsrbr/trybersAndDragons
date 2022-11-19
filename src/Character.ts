@@ -22,7 +22,9 @@ export default class Character implements Fighter {
     this._lifePoints = this._maxLifePoints;
     this._strength = getRandomInt(1, 10);
     this._defense = getRandomInt(1, 10);
-    this._energy = { type_: 'mana', amount: getRandomInt(1, 10) };
+    this._energy = { 
+      type_: this._archetype.energyType, 
+      amount: getRandomInt(1, 10) };
   }
 
   get race(): Race {
@@ -64,25 +66,25 @@ export default class Character implements Fighter {
     if (damage > 0) {
       this._lifePoints -= damage;
     }
-
+    if (damage <= 0) {
+      this._lifePoints -= 1;
+    }
     if (this._lifePoints <= 0) {
       this._lifePoints = -1;
     }
-
     return this._lifePoints;
   }
 
-  attack(enemy: SimpleFighter): void {
+  attack(enemy: SimpleFighter | Fighter): void {
     enemy.receiveDamage(this._strength);
   }
 
   levelUp(): void {
-    const random = getRandomInt(1, 10);
     this._energy.amount = 10;
-    this._maxLifePoints += random;
-    this._strength += random;
-    this._dexterity += random;
-    this._defense += random;
+    this._maxLifePoints += getRandomInt(1, 10);
+    this._strength += getRandomInt(1, 10);
+    this._dexterity += getRandomInt(1, 10);
+    this._defense += getRandomInt(1, 10);
     if (this._maxLifePoints > this.race.maxLifePoints) {
       this._maxLifePoints = this.race.maxLifePoints;
     }
